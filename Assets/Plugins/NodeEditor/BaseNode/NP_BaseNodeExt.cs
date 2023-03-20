@@ -6,14 +6,14 @@ namespace Plugins.NodeEditor
     {
         [Input("NpBehave_PreNode"), Vertical] public NP_NodeBase PreNode;
 
-        [Input("NPBehave_NextNode"), Vertical] public NP_NodeBase NextNode;
+        [Output("NPBehave_NextNode"), Vertical] public NP_NodeBase NextNode;
     }
 
     public partial class NP_DecoratorNodeBase
     {
         [Input("NpBehave_PreNode"), Vertical] public NP_NodeBase PreNode;
 
-        [Input("NPBehave_NextNode"), Vertical] public NP_NodeBase NextNode;
+        [Output("NPBehave_NextNode"), Vertical] public NP_NodeBase NextNode;
     }
 
     public partial class NP_TaskNodeBase

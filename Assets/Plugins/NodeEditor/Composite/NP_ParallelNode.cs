@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using GraphProcessor;
+﻿using GraphProcessor;
+using NPBehave;
 
 namespace Plugins.NodeEditor
 {
@@ -11,7 +7,12 @@ namespace Plugins.NodeEditor
     public class NP_ParallelNode : NP_CompositeNodeBase
     {
         public override string name => "并行节点";
-        
 
+        public NP_ParallelNodeData NpParallelNodeData = new NP_ParallelNodeData();
+
+        public override NP_NodeDataBase NP_GetNodeData()
+        {
+            return NpParallelNodeData;
+        }
     }
 }
