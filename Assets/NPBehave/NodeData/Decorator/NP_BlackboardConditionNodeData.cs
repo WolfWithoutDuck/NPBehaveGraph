@@ -1,4 +1,5 @@
-﻿using MainCore;
+﻿
+using MainCore;
 
 namespace NPBehave
 {

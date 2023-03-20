@@ -1,20 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MainCore;
+using MessagePack;
 
 namespace NPBehave
 {
+    [MessagePackObject]
+    [Serializable]
+    [Union(0, typeof(NP_NodeDataBase))]
     public abstract class NP_NodeDataBase
     {
         /// <summary>
         /// 自身节点ID
         /// </summary>
+        [Key(0)]
         public long id;
 
         /// <summary>
         /// 相连的节点ID
         /// </summary>
+        [Key(1)]
         public List<long> LinkedIds = new List<long>();
 
+        [IgnoreMember]
         public string NodeDesc;
 
         public abstract Node NP_GetNode();

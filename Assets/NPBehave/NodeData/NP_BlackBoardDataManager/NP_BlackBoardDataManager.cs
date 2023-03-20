@@ -2,6 +2,9 @@
 
 namespace NPBehave
 {
+    /// <summary>
+    /// 单个Canvas数据处理器
+    /// </summary>
     public class NP_BlackBoardDataManager
     {
         public Dictionary<string, object> BBValues = new Dictionary<string, object>();

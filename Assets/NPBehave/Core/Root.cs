@@ -42,6 +42,15 @@ namespace NPBehave
             this.blackboard = new Blackboard(this.clock);
             this.SetRoot(this);
         }
+        
+        public Root(Node mainNode,Clock clock) : base("Root", mainNode)
+        {
+            this.mainNode = mainNode;
+            this.clock = clock;
+            this.blackboard = new Blackboard(this.clock);
+            this.SetRoot(this);
+        }
+        
         public Root(Blackboard blackboard, Node mainNode) : base("Root", mainNode)
         {
             this.blackboard = blackboard;
