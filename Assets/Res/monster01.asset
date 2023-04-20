@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045fd7acc2e265d4e9b2aebdc3703a0e, type: 3}
+  m_Name: monster01
+  m_EditorClassIdentifier: 
+  serializedNodes: []
+  nodes:
+  - id: 0
+  - id: 1
+  - id: 2
+  - id: 3
+  edges:
+  - GUID: a73cb8ae-8614-4838-8a4f-840e820fdb59
+    owner: {fileID: 11400000}
+    inputNodeGUID: f5aae0bc-bd7c-42c3-8bd2-5c8c428d9a03
+    outputNodeGUID: 695ada9a-ac8f-4e81-b559-06349d7fe3d1
+    inputFieldName: PreNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 4e36c5d6-009b-457a-b6c5-1872d4094108
+    owner: {fileID: 11400000}
+    inputNodeGUID: 4fba2a36-9d1b-4d43-9c46-2a024c92f7c6
+    outputNodeGUID: f5aae0bc-bd7c-42c3-8bd2-5c8c428d9a03
+    inputFieldName: PreNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 3a9453d2-288c-4f56-ab30-c209c1e3e4ea
+    owner: {fileID: 11400000}
+    inputNodeGUID: 5520befd-af51-411f-a282-a793c83d82a1
+    outputNodeGUID: f5aae0bc-bd7c-42c3-8bd2-5c8c428d9a03
+    inputFieldName: PreNode
+    outputFieldName: NextNode
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  groups: []
+  stackNodes: []
+  pinnedElements: []
+  exposedParameters: []
+  serializedParameterList: []
+  stickyNotes: []
+  nodeInspectorReference: {fileID: 0}
+  position: {x: -170, y: -117, z: 0}
+  scale: {x: 1.15, y: 1.15, z: 1}
+  references:
+    version: 1
+    00000000:
+      type: {class: NP_RootNode, ns: Plugins.NodeEditor, asm: NodeGraphEditor}
+      data:
+        nodeCustomName: 
+        GUID: 695ada9a-ac8f-4e81-b559-06349d7fe3d1
+        computeOrder: 0
+        position:
+          serializedVersion: 2
+          x: 788
+          y: 271
+          width: 115
+          height: 48
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        Level: 0
+    00000001:
+      type: {class: NP_LogActionNode, ns: Plugins.NodeEditor, asm: NodeGraphEditor}
+      data:
+        nodeCustomName: 
+        GUID: 4fba2a36-9d1b-4d43-9c46-2a024c92f7c6
+        computeOrder: 2
+        position:
+          serializedVersion: 2
+          x: 700
+          y: 514
+          width: 88
+          height: 48
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        Level: 0
+        testSerStr: 9999
+        NpActionNodeData:
+          id: 2
+          LinkedIds: 
+          NodeDesc: 
+    00000002:
+      type: {class: NP_SequenceNode, ns: Plugins.NodeEditor, asm: NodeGraphEditor}
+      data:
+        nodeCustomName: 
+        GUID: f5aae0bc-bd7c-42c3-8bd2-5c8c428d9a03
+        computeOrder: 1
+        position:
+          serializedVersion: 2
+          x: 801.86957
+          y: 374.00003
+          width: 91
+          height: 54
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        Level: 0
+        NpSequenceNodeData:
+          id: 1
+          LinkedIds: 02000000000000000300000000000000
+          NodeDesc: 
+    00000003:
+      type: {class: NP_LogActionNode, ns: Plugins.NodeEditor, asm: NodeGraphEditor}
+      data:
+        nodeCustomName: 
+        GUID: 5520befd-af51-411f-a282-a793c83d82a1
+        computeOrder: 3
+        position:
+          serializedVersion: 2
+          x: 859
+          y: 514
+          width: 88
+          height: 48
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        Level: 0
+        testSerStr: 1688
+        NpActionNodeData:
+          id: 3
+          LinkedIds: 
+          NodeDesc: 

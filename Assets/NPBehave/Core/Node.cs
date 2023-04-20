@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace NPBehave
@@ -137,6 +138,18 @@ namespace NPBehave
             this.DebugLastStopRequestAt = UnityEngine.Time.time;
             this.DebugNumStopCalls++;
 #endif
+            DoStop();
+        }
+        
+        
+        /// <summary>
+        /// 取消当前节点的执行，但并不返回状态结果
+        /// </summary>
+        public void CancelWithoutReturnResult()
+        {
+            //Assert.AreEqual(this.currentState, State.ACTIVE, "can only stop active nodes, tried to stop " + this.Name + "! PATH: " + GetPath());
+            Debug.Assert(this.currentState == State.ACTIVE, $"can only stop active nodes, tried to stop  PATH: {GetPath()}");
+            this.currentState = State.STOP_REQUESTED;
             DoStop();
         }
 
