@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using GraphProcessor;
-using MessagePack;
 using NPBehave;
 using UnityEditor;
 using UnityEngine;
-
+using Sirenix;
+using Sirenix.Serialization;
 
 namespace Plugins.NodeEditor
 {
@@ -24,7 +25,7 @@ namespace Plugins.NodeEditor
         /// </summary>
         public void PrepareNodeInfo()
         {
-            Debug.Log("对节点进行前置赋值行为");
+            Debug.Log("对节点进行前置赋值行为 当前节点数量为：" + nodes.Count);
             // this.OnGraphEnable();
             allNodes.Clear();
             dataStoreSupport.NpNodeDataBasesDict.Clear();
@@ -52,27 +53,34 @@ namespace Plugins.NodeEditor
         /// <summary>
         /// 把数据保存为二进制
         /// </summary>
-        public void Save()
+        public void Save(NpTreeGraphGenData genInfo)
         {
-            string savePath = Application.dataPath + "/res";
-            if (!Directory.Exists(savePath))
+            if (!Directory.Exists(genInfo.OutputBTBytesDir))
             {
-                AssetDatabase.CreateFolder(savePath, "res");
+                AssetDatabase.CreateFolder(genInfo.OutputBTBytesDir, "res");
             }
 
-            // byte[] bytes = MessagePackSerializer.Serialize(dataStoreSupport);
-            //
-
-            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4Block);
-            byte[] bytes = MessagePackSerializer.Serialize(dataStoreSupport, lz4Options);
-            // File.WriteAllBytes(savePath,bytes);
-
-            using (FileStream stream = new FileStream($"{savePath}/behaveTree.bytes", FileMode.OpenOrCreate))
-            {
-                stream.Write(bytes, 0, bytes.Length);
-            }
+            // Debug.Log("Save As + "+ Path.Combine(genInfo.OutputBTBytesDir,this.name+genInfo.OutputBTBytesFilePosfix)); 
+            string outputPath = Path.Combine(genInfo.OutputBTBytesDir, this.name + genInfo.OutputBTBytesFilePosfix);
+            FileUtil.SerializeAndSaveToFile(dataStoreSupport, outputPath);
+            CheckBinarySucc<NP_DataStoreSupport>(outputPath);
         }
 
+        public void CheckBinarySucc<T>(string path)
+        {
+            T testData;
+            byte[] bytes = File.ReadAllBytes(path);
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                using (BinaryDataReader reader = new BinaryDataReader(stream, new DeserializationContext()))
+                {
+                    testData = SerializationUtility.DeserializeValue<T>(reader);
+                }
+            }
+
+            var newBytes = SerializationUtility.SerializeValue(testData, DataFormat.Binary);
+            Debug.Assert(newBytes.EqualsEx(bytes), "BehaviourTree Serialize Failed ");
+        }
 
         /// <summary>
         /// 遍历节点
@@ -93,7 +101,7 @@ namespace Plugins.NodeEditor
             }
 
             levelNodes.Sort(((a, b) => a.position.x.CompareTo(b.position.x)));
-
+            node.NP_GetNodeData().LinkedIds.Clear();
             foreach (var childNode in levelNodes)
             {
                 index++;
@@ -101,12 +109,13 @@ namespace Plugins.NodeEditor
                 node.NP_GetNodeData().LinkedIds.Add(childNode.NP_GetNodeData().id);
             }
 
+            dataStoreSupport.NpNodeDataBasesDict.Add(nodeDataBase.id, nodeDataBase);
+            // Debug.Log("travers id :  " + node.NP_GetNodeData().id + "child : " + node.NP_GetNodeData().LinkedIds.Count);
+            // Debug.Log("node_outputNodes + : " + node.GetOutputNodes().Count());
             foreach (var childNode in levelNodes)
             {
                 travers(childNode);
             }
-
-            dataStoreSupport.NpNodeDataBasesDict.Add(nodeDataBase.id, nodeDataBase);
         }
     }
 }
