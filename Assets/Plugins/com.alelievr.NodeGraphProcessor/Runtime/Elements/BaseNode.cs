@@ -5,16 +5,19 @@ using System;
 using System.Reflection;
 using Unity.Jobs;
 using System.Linq;
+using Sirenix.OdinInspector;
 
 namespace GraphProcessor
 {
 	public delegate IEnumerable< PortData > CustomPortBehaviorDelegate(List< SerializableEdge > edges);
 	public delegate IEnumerable< PortData > CustomPortTypeBehaviorDelegate(string fieldName, string displayName, object value);
 
-	[Serializable]
+	[BoxGroup]
+	[HideLabel]
+	[HideReferenceObjectPicker]
 	public abstract class BaseNode
 	{
-		[SerializeField]
+		[HideInInspector]
 		internal string nodeCustomName = null; // The name of the node in case it was renamed by a user
 
 		/// <summary>
@@ -45,8 +48,10 @@ namespace GraphProcessor
         public virtual bool         isLocked => nodeLock; 
 
         //id
+        [HideInInspector]
         public string				GUID;
-
+		
+        [HideInInspector]
 		public int					computeOrder = -1;
 
 		/// <summary>Tell wether or not the node can be processed. Do not check anything from inputs because this step happens before inputs are sent to the node</summary>
@@ -62,26 +67,30 @@ namespace GraphProcessor
 		/// Container of input ports
 		/// </summary>
 		[NonSerialized]
-		public readonly NodeInputPortContainer	inputPorts;
+		public  NodeInputPortContainer	inputPorts;
 		/// <summary>
 		/// Container of output ports
 		/// </summary>
 		[NonSerialized]
-		public readonly NodeOutputPortContainer	outputPorts;
+		public  NodeOutputPortContainer	outputPorts;
 
 		//Node view datas
+		[HideInInspector]
 		public Rect					position;
 		/// <summary>
 		/// Is the node expanded
 		/// </summary>
+		[HideInInspector]
 		public bool					expanded;
 		/// <summary>
 		/// Is debug visible
 		/// </summary>
+		[HideInInspector]
 		public bool					debug;
 		/// <summary>
 		/// Node locked state
 		/// </summary>
+		[HideInInspector]
         public bool                 nodeLock;
 
         public delegate void		ProcessDelegate();
@@ -107,7 +116,7 @@ namespace GraphProcessor
 		public event Action< string >					onPortsUpdated;
 
 		[NonSerialized]
-		bool _needsInspector = false;
+		bool _needsInspector = true;
 
 		/// <summary>
 		/// Does the node needs to be visible in the inspector (when selected).
@@ -220,7 +229,13 @@ namespace GraphProcessor
 			this.graph = graph;
 
 			ExceptionToLog.Call(() => Enable());
-
+			
+			
+			inputPorts = new NodeInputPortContainer(this);
+			outputPorts = new NodeOutputPortContainer(this);
+			nodeFields = new Dictionary<string, NodeFieldInformation>();
+			customPortTypeBehaviorMap = new Dictionary<Type, CustomPortTypeBehaviorDelegate>();
+			InitializeInOutDatas();
 			InitializePorts();
 		}
 
@@ -467,6 +482,9 @@ namespace GraphProcessor
 		{
 			bool changed  = false;
 
+			
+			fieldsToUpdate ??= new Stack<PortUpdate>();
+			updatedFields ??= new HashSet<PortUpdate>();
 			fieldsToUpdate.Clear();
 			updatedFields.Clear();
 
@@ -546,7 +564,7 @@ namespace GraphProcessor
 				string name = field.Name;
 				string tooltip = null;
 
-				if (showInInspector != null)
+				// if (showInInspector != null)
 					_needsInspector = true;
 
 				if (inputAttribute == null && outputAttribute == null)

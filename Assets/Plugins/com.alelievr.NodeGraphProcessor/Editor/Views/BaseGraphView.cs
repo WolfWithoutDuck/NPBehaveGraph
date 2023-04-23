@@ -31,7 +31,7 @@ namespace GraphProcessor
 		/// <summary>
 		/// Connector listener that will create the edges between ports
 		/// </summary>
-		public BaseEdgeConnectorListener			connectorListener;
+		public BaseEdgeConnectorListener			connectorListener;  
 
 		/// <summary>
 		/// List of all node views in the graph
@@ -367,7 +367,7 @@ namespace GraphProcessor
 							if (Selection.activeObject == nodeInspector)
 								UpdateNodeInspectorSelection();
 
-							SyncSerializedPropertyPathes();
+							// SyncSerializedPropertyPathes();
 							return true;
 						case GroupView group:
 							graph.RemoveGroup(group.group);
@@ -914,19 +914,18 @@ namespace GraphProcessor
 
 		public void UpdateNodeInspectorSelection()
 		{
-			if (nodeInspector.previouslySelectedObject != Selection.activeObject)
-				nodeInspector.previouslySelectedObject = Selection.activeObject;
-
-			HashSet<BaseNodeView> selectedNodeViews = new HashSet<BaseNodeView>();
+			// if (nodeInspector.previouslySelectedObject != Selection.activeObject)
+			// 	nodeInspector.previouslySelectedObject = Selection.activeObject;
+			
 			nodeInspector.selectedNodes.Clear();
 			foreach (var e in selection)
 			{
 				if (e is BaseNodeView v && this.Contains(v) && v.nodeTarget.needsInspector)
-					selectedNodeViews.Add(v);
+					nodeInspector.selectedNodes.Add(v);
 			}
 
-			nodeInspector.UpdateSelectedNodes(selectedNodeViews);
-			if (Selection.activeObject != nodeInspector && selectedNodeViews.Count > 0)
+			// nodeInspector.UpdateSelectedNodes(selectedNodeViews);
+			if ( nodeInspector.selectedNodes.Count > 0)
 				Selection.activeObject = nodeInspector;
 		}
 
@@ -1276,6 +1275,7 @@ namespace GraphProcessor
 				return ;
 
 			EditorUtility.SetDirty(graph);
+			AssetDatabase.SaveAssets();
 		}
 
 		public void ToggleView< T >() where T : PinnedElementView
@@ -1393,7 +1393,7 @@ namespace GraphProcessor
 		{
 			foreach (var nodeView in nodeViews)
 				nodeView.SyncSerializedPropertyPathes();
-			nodeInspector.RefreshNodes();
+			// nodeInspector.RefreshNodes();
 		}
 
 		/// <summary>

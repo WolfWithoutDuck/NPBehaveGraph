@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine.Serialization;
 using UnityEngine.SceneManagement;
 
@@ -31,9 +32,8 @@ namespace GraphProcessor
 		DepthFirst,
 		BreadthFirst,
 	}
-
-	[System.Serializable]
-	public class BaseGraph : ScriptableObject, ISerializationCallbackReceiver
+	
+	public class BaseGraph : SerializedScriptableObject
 	{
 		static readonly int			maxComputeOrderDepth = 1000;
 		
@@ -55,7 +55,6 @@ namespace GraphProcessor
 		/// </summary>
 		/// <typeparam name="BaseNode"></typeparam>
 		/// <returns></returns>
-		[SerializeReference]
 		public List< BaseNode >							nodes = new List< BaseNode >();
 
 		/// <summary>
@@ -96,7 +95,7 @@ namespace GraphProcessor
 		/// </summary>
 		/// <typeparam name="stackNodes"></typeparam>
 		/// <returns></returns>
-		[SerializeField, SerializeReference] // Polymorphic serialization
+		[SerializeField] // Polymorphic serialization
 		public List< BaseStackNode >					stackNodes = new List< BaseStackNode >();
 
 		/// <summary>
@@ -112,7 +111,7 @@ namespace GraphProcessor
 		/// </summary>
 		/// <typeparam name="ExposedParameter"></typeparam>
 		/// <returns></returns>
-		[SerializeField, SerializeReference]
+		[SerializeField]
 		public List< ExposedParameter >					exposedParameters = new List< ExposedParameter >();
 
 		[SerializeField, FormerlySerializedAs("exposedParameters")] // We keep this for upgrade
@@ -442,7 +441,7 @@ namespace GraphProcessor
 			pinned.opened = false;
 		}
 
-		public void OnBeforeSerialize()
+		protected override void  OnBeforeSerialize()
 		{
 			// Cleanup broken elements
 			stackNodes.RemoveAll(s => s == null);
@@ -502,8 +501,7 @@ namespace GraphProcessor
 #pragma warning restore CS0618
 		}
 
-		public void OnAfterDeserialize() {}
-
+		
 		/// <summary>
 		/// Update the compute order of the nodes in the graph
 		/// </summary>
