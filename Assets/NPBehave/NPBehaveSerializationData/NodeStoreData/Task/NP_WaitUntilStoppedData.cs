@@ -1,10 +1,12 @@
 ﻿using System;
 using MainCore;
+using Sirenix.OdinInspector;
 
 namespace NPBehave
 {
 
-    [Serializable]
+    [BoxGroup("等待到停止节点数据")]
+    [HideLabel]
     public class NP_WaitUntilStoppedData : NP_NodeDataBase
     {
   

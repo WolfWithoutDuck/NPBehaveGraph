@@ -1,13 +1,17 @@
 ﻿using System;
 using MainCore;
+using Sirenix.OdinInspector;
 
 namespace NPBehave
 {
 
-    [Serializable]
+  
     public class NP_ServiceNodeData : NP_NodeDataBase
     {
+        [HideInEditorMode]
         public Service m_Service;
+        
+        [LabelText("委托执行时间间隔")]
         public float interval;
         public NP_ClassForStoreAction NpClassForStoreAction;
 

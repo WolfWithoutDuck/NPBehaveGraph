@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 
 namespace NPBehave
@@ -7,6 +8,7 @@ namespace NPBehave
     [Serializable]
     public class NP_SelectorNodeData : NP_NodeDataBase
     {
+        [HideInInspector]
        private Selector m_SelectorNode;
 
         public override Composite CreateComposite(Node[] nodes)

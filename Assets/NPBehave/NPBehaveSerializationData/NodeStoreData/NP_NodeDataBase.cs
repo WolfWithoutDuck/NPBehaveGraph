@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using MainCore;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace NPBehave
 {
@@ -10,13 +12,16 @@ namespace NPBehave
         /// <summary>
         /// 自身节点ID
         /// </summary>
-        public long id;
+        [HideInEditorMode] public long id;
 
         /// <summary>
         /// 相连的节点ID
         /// </summary>
-        public List<long> LinkedIds = new List<long>();
+        [HideInEditorMode] public List<long> LinkedIds = new List<long>();
 
+        [BoxGroup("结点信息描述")] 
+        [TextArea(2, 2)]
+        [HideLabel]
         public string NodeDesc;
 
         public abstract Node NP_GetNode();

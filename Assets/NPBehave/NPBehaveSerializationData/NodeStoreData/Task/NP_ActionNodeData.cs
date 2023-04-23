@@ -1,12 +1,15 @@
 ﻿using System;
 using MainCore;
+using Sirenix.OdinInspector;
+
 namespace NPBehave
 {
 
-    [Serializable]
+    [BoxGroup("行为结点数据")]
+    [HideLabel]
     public class NP_ActionNodeData : NP_NodeDataBase
     {
- 
+        [HideInEditorMode]
         private Action m_ActionNode;
         
      

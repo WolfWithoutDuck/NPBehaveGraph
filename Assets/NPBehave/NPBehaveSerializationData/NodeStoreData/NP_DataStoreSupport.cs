@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NPBehave
 {
-    [Serializable]
+    /// <summary>
+    /// 技能配置数据载体
+    /// </summary>
+    [HideLabel]
     public class NP_DataStoreSupport
     {
+        [LabelText("此行为树Id，也是根节点Id")]
         public long NPBehaveTreeRootID;
 
         public NP_NodeDataBase RootNode;
@@ -14,11 +19,13 @@ namespace NPBehave
         /// <summary>
         /// 单个行为树所有节点数据
         /// </summary>
+        [LabelText("单个行为树所有结点")]
         public Dictionary<long, NP_NodeDataBase> NpNodeDataBasesDict = new Dictionary<long, NP_NodeDataBase>();
 
         /// <summary>
         /// 黑板数据
         /// </summary>
+        [LabelText("黑板数据")]
         public Dictionary<string, object> NP_BBManager = new Dictionary<string, object>();
 
 

@@ -1,12 +1,14 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 
 
 namespace NPBehave
 {
   
-    [Serializable]
+
     public class NP_SequenceNodeData : NP_NodeDataBase
     {
+        [HideInEditorMode]
         private Sequence m_SequenceNode;
 
         public override Composite CreateComposite(Node[] nodes)

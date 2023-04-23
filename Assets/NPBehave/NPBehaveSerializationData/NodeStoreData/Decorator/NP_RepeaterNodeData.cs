@@ -1,12 +1,14 @@
 ﻿using System;
 using MainCore;
+using Sirenix.OdinInspector;
 
 namespace NPBehave
 {
 
-    [Serializable]
+ 
     public class NP_RepeaterNodeData : NP_NodeDataBase
     {
+        [HideInEditorMode]
         public Repeater m_Repeater;
 
         public override Decorator CreateDecoratorNode(Unit unit, NP_RuntimeTree runtimeTree, Node node)

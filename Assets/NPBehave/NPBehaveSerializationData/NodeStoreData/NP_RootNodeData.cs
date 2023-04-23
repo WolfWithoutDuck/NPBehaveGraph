@@ -1,9 +1,11 @@
 ﻿using MainCore;
+using Sirenix.OdinInspector;
 
 namespace NPBehave
 {
     public class NP_RootNodeData : NP_NodeDataBase
     {
+        [HideInEditorMode]
         public Root m_Root;
 
         public override Decorator CreateDecoratorNode(Unit unit, NP_RuntimeTree runtimeTree, Node node)

@@ -1,27 +1,33 @@
 ﻿using System;
 using MainCore;
-
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NPBehave
 {
-    [Serializable]
+    [BoxGroup("用于包含Action的数据类"),GUIColor(0.961f, 0.902f, 0.788f, 1f)]
+    [HideLabel]
     public class NP_ClassForStoreAction
     {
         /// <summary>
         /// 归属的UnitID
         /// </summary>
+        [HideInEditorMode]
         public Unit BelongToUnit;
 
         /// <summary>
         /// 运行时归属的行为树
         /// </summary>
+        [HideInEditorMode]
         public NP_RuntimeTree BelongRuntimeTree;
 
+        [HideInEditorMode]
         public System.Action Action;
 
+        [HideInEditorMode]
         public Func<bool> Func1;
 
+        [HideInEditorMode]
         public Func<bool, NPBehave.Action.Result> Func2;
 
 

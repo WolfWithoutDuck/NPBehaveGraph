@@ -1,17 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 
 namespace NPBehave
 {
 
-    [Serializable]
+    /// <summary>
+    /// 与黑板节点相关的数据
+    /// </summary>
+    [BoxGroup("黑板数据配置"), GUIColor(0.961f, 0.902f, 0.788f, 1f)]
+    [HideLabel]
     public class NP_BlackBoardRelationData
     {
+        [LabelText("字典键")] [ValueDropdown("GetBBKeys")] [OnValueChanged("OnBBKeySelected")]
          public string BBKey;
-
+    
+         [LabelText("是否可以把值写入黑板，或者是否与黑板进行值对比")]
          public bool WriteOrCompareToBB;
-
-        public string NP_BBValueType;
+         
+         [LabelText("指定的值类型")] [ReadOnly]
+         public string NP_BBValueType;
+         
+         [ShowIf("WriteOrCompareToBB")]
          public object NP_BBValue;
 
 #if UNITY_EDITOR
