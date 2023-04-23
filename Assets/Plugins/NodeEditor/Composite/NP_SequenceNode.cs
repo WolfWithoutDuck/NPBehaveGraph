@@ -1,5 +1,6 @@
 ﻿using GraphProcessor;
 using NPBehave;
+using Sirenix.OdinInspector;
 
 namespace Plugins.NodeEditor
 {
@@ -8,7 +9,10 @@ namespace Plugins.NodeEditor
     {
         public override string name => "序列节点";
 
-        public NP_SequenceNodeData NpSequenceNodeData = new NP_SequenceNodeData();
+        [BoxGroup("Sequence结点数据")]
+        [HideReferenceObjectPicker]
+        [HideLabel]
+        public NP_SequenceNodeData NpSequenceNodeData = new NP_SequenceNodeData(){NodeDesc = "序列组合器"};
 
         public override NP_NodeDataBase NP_GetNodeData()
         {
